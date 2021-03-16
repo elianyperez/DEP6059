@@ -1,0 +1,4 @@
+"0","colleges_label<-colleges  %>% "
+"0","  mutate(CONTROL = if_else(CONTROL == 1, ""Public"", ""Private"")"
+"0","         )"
+"0",""

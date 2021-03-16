@@ -1,0 +1,4 @@
+"0","colleges<-import(""colleges_clean.csv"")"
+"0","colleges%>%"
+"0","  ggplot(aes(x=TUITIONFEE_IN))+"
+"0","  geom_histogram()"

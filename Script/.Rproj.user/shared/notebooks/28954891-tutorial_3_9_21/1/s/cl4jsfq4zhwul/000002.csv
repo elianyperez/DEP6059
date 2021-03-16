@@ -1,0 +1,2 @@
+"0","percentage<- colleges_label %>%  "
+"0","  mutate(ADM_PERC = ADM_RATE * 100)"
