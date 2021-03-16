@@ -1,0 +1,164 @@
+---
+title: "Tutorial"
+author: "Eliany Perez"
+date: "3/9/2021"
+output: html_document
+---
+#ctrl + alt + i = chunk
+#ctrl + shift + m = %>% 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load packages}
+setwd("C:/Users/12393/Desktop/RTutorial")
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(yarrr)
+library(ggplot2)
+library(rio)
+library(forcats)
+###cool ggplot plotter###
+#library(esquisse)
+#esquisse::esquisser()
+```
+
+```{r load data}
+colleges<-import("colleges_clean.csv")
+colleges%>%
+  ggplot(aes(x=TUITIONFEE_IN))+
+  geom_histogram()
+
+
+
+```
+
+```{r histogram}
+colleges%>%
+  ggplot(aes(x=TUITIONFEE_IN))+
+  geom_density()
+```
+
+```{r}
+colleges%>%
+  ggplot(aes(x=TUITIONFEE_IN))+
+  geom_bar()
+```
+
+```{r}
+colleges %>%
+  ggplot(aes(x = TUITIONFEE_IN, y=STABBR)) +
+  geom_boxplot()
+```
+
+```{r}
+colleges %>%
+  filter(STABBR%in%c("AL","FL","GA","KY")) %>% 
+  ggplot(aes(x=TUITIONFEE_IN,y=STABBR))+
+  geom_boxplot()
+```
+
+
+```{r}
+colleges %>%
+  filter(STABBR=="FL") %>% 
+  ggplot(aes(x=TUITIONFEE_IN,y=STABBR))+
+  geom_boxplot()
+```
+
+```{r}
+colleges %>%
+  ggplot(aes(x=ADM_RATE,y=SAT_AVG))+
+  geom_line()
+
+```
+
+```{r}
+colleges %>%  
+  ggplot(aes(x = ADM_RATE, y = SAT_AVG, color = as.character(CONTROL))) + 
+  geom_line()
+
+```
+
+```{r}
+colleges %>%  
+  ggplot(aes(x = ADM_RATE, y = SAT_AVG, color = as.character(CONTROL))) + 
+  geom_line()+
+  labs(x = "Admission Rate",
+       title = "College Average SAT Scores by Admission Rates",
+       y = "Average SAT",  
+       color = "College Type")
+
+```
+
+```{r}
+colleges_label<-colleges  %>% 
+  mutate(CONTROL = if_else(CONTROL == 1, "Public", "Private")
+         )
+
+```
+
+```{r}
+colleges_label %>%  
+  ggplot(aes(x = ADM_RATE, y = SAT_AVG, color = as.character(CONTROL))) + 
+  geom_line()+
+  labs(x = "Admission Rate",
+       title = "College Average SAT Scores by Admission Rates",
+       y = "Average SAT",  
+       color = "College Type")
+```
+
+
+
+```{r}
+percentage<- colleges_label %>%  
+  mutate(ADM_PERC = ADM_RATE * 100)
+```
+
+```{r}
+percentage %>%  
+  ggplot(aes(x = ADM_PERC, y = SAT_AVG, color = as.character(CONTROL))) + 
+  geom_line()+
+  labs(x = "Admission Rate",
+       title = "College Average SAT Scores by Admission Rates",
+       y = "Average SAT",  
+       color = "College Type")
+```
+
+
+```{r}
+percentage%>%
+  ggplot(aes(x = ADM_PERC, y = SAT_AVG, color = CONTROL)) + 
+  geom_line() +
+  labs(x = "Admission Percentage %",
+       title = "College Average SAT Scores by Admission Rates",
+       y = "Average SAT",  
+       color = "College Type")+
+  facet_wrap(vars(REGION))
+
+```
+
+```{r}
+percentage%>%
+  ggplot(aes(x = ADM_PERC, y = SAT_AVG, color = CONTROL)) + 
+  geom_line() +
+  labs(x = "Admission Percentage %",
+       title = "College Average SAT Scores by Admission Rates",
+       y = "Average SAT",  
+       color = "College Type")+
+  facet_wrap(vars(REGION)) +  
+  theme_minimal() +
+  labs(x = "Admission Rate",
+       title = "College Average SAT Scores by Admission Rates",
+       y = "",  
+       color = "College Type") +
+    theme(axis.text.x = element_text(size = 10, angle = 60), 
+        axis.text.y = element_text(size = 12), 
+        axis.title.x = element_text(size = 12),
+        legend.text = element_text(size = 10),
+        legend.title = element_text(size = 12),
+        plot.title = element_text(size = 16))
+
+```
+

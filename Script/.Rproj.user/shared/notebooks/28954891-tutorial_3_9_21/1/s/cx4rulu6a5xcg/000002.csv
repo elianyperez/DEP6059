@@ -1,0 +1,8 @@
+"0","colleges %>%  "
+"0","  ggplot(aes(x = ADM_RATE, y = SAT_AVG, color = as.character(CONTROL))) + "
+"0","  geom_line()+"
+"0","  labs(x = ""Admission Rate"","
+"0","       title = ""College Average SAT Scores by Admission Rates"","
+"0","       y = ""Average SAT"",  "
+"0","       color = ""College Type"")"
+"0",""
