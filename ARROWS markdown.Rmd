@@ -1,0 +1,83 @@
+---
+title: "Arrows_stats"
+author: "Eliany Perez"
+date: "4/19/2021"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+setwd("C:/Users/12393/Desktop/Arrows")
+roi<-read.csv("ROIs.csv")
+```
+
+```{r}
+#ttests
+
+jmv::ttestOneS(
+  data = roi,
+  vars = Parietal,
+  meanDiff = TRUE,
+  ci = TRUE,
+  effectSize = TRUE,
+  ciES = TRUE,
+  desc = TRUE)
+
+jmv::ttestOneS(
+  data = roi,
+  vars = Lateral.Occipital,
+  meanDiff = TRUE,
+  ci = TRUE,
+  effectSize = TRUE,
+  ciES = TRUE,
+  desc = TRUE)
+
+```
+
+Because the previous ttests were done on a large region of the brain, I extracted specific coordinates based on previous studies to conduct the following ttests and now we can see that they are statistically significant.
+
+```{r}
+
+#Left Parietal
+jmv::ttestOneS(
+  data = roi,
+  vars = Left.Parietal,
+  meanDiff = TRUE,
+  ci = TRUE,
+  effectSize = TRUE,
+  ciES = TRUE,
+  desc = TRUE)
+
+
+#right Parietal
+jmv::ttestOneS(
+  data = roi,
+  vars = Right.Parietal,
+  meanDiff = TRUE,
+  ci = TRUE,
+  effectSize = TRUE,
+  ciES = TRUE,
+  desc = TRUE)
+
+```
+So now we know that for words versus images, there is significant activation in both the left and right parietal cortex.
+
+```{r}
+library(ggplot2)
+
+ggplot(roi, aes(words_LP, images_LP, color= ID)) + 
+  geom_point()+
+  geom_smooth(method = lm)
+```
+
+```{r}
+library(ggplot2)
+
+ggplot(roi, aes(words_RP, images_RP, color= ID)) + 
+  geom_point()+
+  geom_smooth(method = lm)
+```
+Both for the Left and Right Parietal cortex, there as activation increases for images, activation for words decreases.
